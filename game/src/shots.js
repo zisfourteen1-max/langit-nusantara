@@ -41,6 +41,8 @@ export function stageShot(name, state) {
   if (name === 'rings') {
     // Mid-flight: already through one ring, closing on the next over terraces.
     state.phase = PHASE_PLAY;
+    state.airborne = true;
+    state.gearDown = false;
     state.distanceNm = leg.rings[0].atNm - 0.35;
     state.altitudeFt = leg.rings[1].altFt - 120;
     state.speedKt = 135;
@@ -58,6 +60,7 @@ export function stageShot(name, state) {
   if (name === 'landing') {
     // Final approach: gear down, flaps, lined up on the runway.
     state.phase = PHASE_PLAY;
+    state.airborne = true;
     state.distanceNm = leg.runway.startNm - 1.1;
     state.altitudeFt = 620;
     state.vspeedFpm = -320;
@@ -90,15 +93,24 @@ export function stageShot(name, state) {
     state.message = 'Pendaratan MULUS!';
     return { screen: SCREEN_LANDED, best: 1250, timeOfDay: 'sunset' };
   }
-  // cover: chase view over a turquoise coast, volcano ahead, ring in sight.
+  // cover: chase view mid-leg, volcano ahead, ring in sight.
   state.phase = PHASE_PLAY;
-  state.distanceNm = 0.6;
+  state.airborne = true;
+  state.gearDown = false;
+  state.distanceNm = 6;
   state.altitudeFt = 2100;
   state.speedKt = 138;
   state.throttle = 0.75;
   state.fuel = 94;
   state.timeLeft = 168;
-  state.message = '';
   flyFor(state, 0.5);
+  // The staging flight "missed" the rings already behind the plane; restore
+  // them so the cover shows a clean mid-leg (0/4) with no stray message,
+  // and level the nose for a calm horizon.
+  for (const ring of state.rings) if (ring.atNm < state.distanceNm) ring.passed = false;
+  state.message = '';
+  state.messageTimer = 0;
+  state.pitchDeg = -2;
+  state.vspeedFpm = -150;
   return { screen: SCREEN_PLAY, best: 0, timeOfDay: 'day' };
 }

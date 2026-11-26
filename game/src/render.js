@@ -33,6 +33,11 @@ function makeClouds(seed) {
 }
 
 export function createRenderer(canvas) {
+  // Fixed logical backing store: the game always draws 1280x720, whatever
+  // the window size (CSS scales the element); without this the canvas
+  // defaults to 300x150 and clips the scene.
+  canvas.width = FIELD.width;
+  canvas.height = FIELD.height;
   const ctx = canvas.getContext('2d');
   let clouds = makeClouds(20261126);
   let timeOfDay = 'day';
@@ -495,16 +500,16 @@ export function createRenderer(canvas) {
     }
   }
 
-  function overlay(title, lines, accent) {
+  function overlay(title, lines, accent, topY = 210) {
     ctx.fillStyle = 'rgba(6,12,20,0.62)';
     ctx.fillRect(0, 0, FIELD.width, FIELD.height);
     ctx.textAlign = 'center';
     ctx.fillStyle = accent || PALETTE.text;
     ctx.font = '800 54px ' + FONT;
-    ctx.fillText(title, FIELD.width / 2, 210);
+    ctx.fillText(title, FIELD.width / 2, topY);
     ctx.fillStyle = PALETTE.text;
     ctx.font = '400 19px ' + FONT;
-    lines.forEach((line, i) => ctx.fillText(line, FIELD.width / 2, 268 + i * 32));
+    lines.forEach((line, i) => ctx.fillText(line, FIELD.width / 2, topY + 58 + i * 32));
   }
 
   function draw(state, screen, best, time, opts = {}) {
@@ -537,12 +542,13 @@ export function createRenderer(canvas) {
     } else if (screen === SCREEN_PAUSED) {
       overlay('JEDA', ['Tekan P atau Spasi untuk lanjut.', 'R untuk mulai dari awal.']);
     } else if (screen === SCREEN_LANDED && state.landing) {
+      // Card high up so the parked plane stays visible below it.
       overlay(`PENDARATAN ${state.landing.quality}`, [
         `Mendarat di ${state.landing.island} — kecepatan ${state.landing.speed} kt, turun ${state.landing.vspeed} fpm.`,
         `+${state.landing.points} poin. Bahan bakar diisi penuh.`,
         '',
         'Tekan SPASI untuk terbang ke pulau berikutnya!',
-      ], PALETTE.good);
+      ], PALETTE.good, 120);
     } else if (screen === SCREEN_OVER) {
       overlay('PENERBANGAN SELESAI', [
         `Skor akhir: ${state.score}   •   Ring: ${state.ringsPassed}   •   Leg: ${state.legIndex + 1}`,
