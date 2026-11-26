@@ -76,10 +76,10 @@ function nextLeg(state) {
   state.gearDown = true;
   state.flaps = 0;
   state.airborne = false;
-  state.altitudeFt = leg.runway.altFt;
+  state.altitudeFt = leg.departure.altFt;
   state.speedKt = 0;
   state.vspeedFpm = 0;
-  state.distanceNm = leg.runway.atNm;
+  state.distanceNm = leg.departure.atNm;
   state.message = `Leg ${state.legIndex + 1} — tujuan ${leg.island.name}!`;
   state.messageTimer = 3;
 }
