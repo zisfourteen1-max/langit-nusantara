@@ -7,7 +7,7 @@ export const FIELD = { width: 1280, height: 720 };
 export const STEP = 1 / 60;
 
 /** One flight lasts this long (seconds); landing a leg adds bonus time. */
-export const FLIGHT_SECONDS = 180;
+export const FLIGHT_SECONDS = 420;
 
 export const LIVES = 3;
 
@@ -34,11 +34,12 @@ export const PLANE = {
   legBonus: 250,
 };
 
-/** Fuel: a full tank lasts about 4 minutes at cruise; landing refuels. */
+/** Fuel: a full tank lasts about 7–8 minutes at cruise — enough for one
+ * 14 nm leg with margin; landing refuels. */
 export const FUEL = {
   start: 100,
-  burnPerSecond: 0.42,   // at cruise throttle
-  burnThrottle: 0.35,    // extra burn scaled by throttle
+  burnPerSecond: 0.14,   // at cruise throttle
+  burnThrottle: 0.12,    // extra burn scaled by throttle
   reserveWarning: 25,
 };
 

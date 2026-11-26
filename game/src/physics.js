@@ -1,6 +1,6 @@
 // The flight model: pure state + step, no DOM, no drawing. The same inputs
 // always give the same flight, so the logic tests can run it in Node.
-import { FUEL, LEG, LIVES, PLANE, STEP, WIND } from './config.js';
+import { FLIGHT_SECONDS, FUEL, LEG, LIVES, PLANE, STEP, WIND } from './config.js';
 import { freshRings } from './world.js';
 
 export const EVENT_NONE = 0;
@@ -35,7 +35,7 @@ export function createFlight(world) {
     bankDeg: 0,
     headingDeg: 90,
     fuel: FUEL.start,
-    timeLeft: 180,
+    timeLeft: FLIGHT_SECONDS,
     rings: freshRings(world.legs[0]),
     ringsPassed: 0,
     ringsTotal: world.legs[0].rings.length,

@@ -86,8 +86,11 @@ function terrainHeightAt(islands, nm) {
     if (b > 0) {
       // Flat coastal airfield around the island centre (the runway): the
       // ground stays low near the strip and rises to full height beyond it.
+      // The shelf is wide (full height only past ~1.65 nm) so the final
+      // approach flies over low ground and a gentle descent can reach the
+      // strip instead of meeting a steep island slope.
       const d = Math.abs(nm - island.atNm);
-      const flat = Math.min(1, Math.max(0, (d - 0.45) / 0.5));
+      const flat = Math.min(1, Math.max(0, (d - 0.45) / 1.2));
       height = Math.max(height, island.peakFt * b * (0.06 + 0.94 * flat));
     }
   }

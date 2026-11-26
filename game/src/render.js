@@ -535,7 +535,7 @@ export function createRenderer(canvas) {
       overlay('LANGIT NUSANTARA', [
         'Terbang melintasi kepulauan Indonesia — lewati ring, mendarat mulus, isi bahan bakar.',
         '↑ ↓ pitch  •  ← → belok  •  Shift gas  •  G roda  •  F flap  •  P jeda  •  M suara',
-        'Satu penerbangan 3 menit, 3 nyawa. Ring +150 poin, pendaratan mulus +400.',
+        'Satu penerbangan 7 menit, 3 nyawa. Ring +150 poin, pendaratan mulus +400.',
         '',
         'Tekan SPASI atau klik untuk terbang!',
       ], '#ffd23f');
